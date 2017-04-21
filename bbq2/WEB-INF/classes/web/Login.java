@@ -68,8 +68,8 @@ public class Login extends HttpServlet{
 		
         DiskFileItemFactory factory = new DiskFileItemFactory();    
          
-        String path = req.getSession().getServletContext().getRealPath("/");    
-//	String path = "/home/web_upload";	
+       // String path = req.getSession().getServletContext().getRealPath("/");    
+	String path = "/home/web_upload";	
         //String path = req.getSession().getServletContext().getRealPath();    
         File file=new File(path);  
 
@@ -82,7 +82,7 @@ public class Login extends HttpServlet{
 
         factory.setRepository(new File(path));   
 
-        factory.setSizeThreshold(10*1024) ;    
+        factory.setSizeThreshold(1024*1024) ;    
  
 ///*
         try {    

@@ -68,9 +68,11 @@ public class DateServlet extends HttpServlet {
 			String tem=useDB.get_touxiang(user_id);
 			String path="";
 			if(tem.equals("logo.jpg")){
-				path = req.getSession().getServletContext().getRealPath("/upload/touxiang/logo.jpg");
+				//path = req.getSession().getServletContext().getRealPath("/upload/touxiang/logo.jpg");
+				  path = "/home/web_upload_tx/logo.jpg";
 			}else{
-				path = req.getSession().getServletContext().getRealPath("/upload/touxiang/")+tem;
+				//path = req.getSession().getServletContext().getRealPath("/upload/touxiang/")+tem;
+				  path = "/home/web_upload_tx" + tem;
 				
 			}
 			System.out.println("picture_path："+path);  
@@ -94,7 +96,8 @@ public class DateServlet extends HttpServlet {
 		
         DiskFileItemFactory factory = new DiskFileItemFactory();    
          
-        String path = req.getSession().getServletContext().getRealPath("/upload/touxiang");    
+        //String path = req.getSession().getServletContext().getRealPath("/upload/touxiang");    
+	String path = "/home/web_upload_tx";
         File file=new File(path);  
         if(!file.exists()){  
             file.mkdirs();  
