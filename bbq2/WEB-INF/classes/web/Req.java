@@ -36,6 +36,80 @@ public class Req extends HttpServlet{
 			resp.getWriter().write(tem);  
 			//System.out.println("successful："+tem);
 		}
+		if(type.equals("one_task")){
+			String task_id=req.getParameter("task_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.req_one_task(task_id);
+			resp.getWriter().write(tem);
+			//System.out.println("successful："+tem);
+		}
+		if(type.equals("accept_task")){
+			String receiver=req.getParameter("user_id");
+			String task_id=req.getParameter("task_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.accept_task(receiver,task_id);
+			resp.getWriter().write(tem);
+			//System.out.println("successful："+tem);
+		}
+		if(type.equals("make_friend")){
+			String user_id1=req.getParameter("user_id1");
+			String user_id2=req.getParameter("user_id2");
+			UseDB useDB=new UseDB();
+			String tem=useDB.make_friend(user_id1,user_id2);
+			resp.getWriter().write(tem);
+			//System.out.println("successful："+tem);
+		}
+		if(type.equals("mytasks")){
+			String toget=req.getParameter("toget");
+			String user_id=req.getParameter("user_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.req_my_task(toget,user_id);
+			resp.getWriter().write(tem);  
+			//System.out.println("successful："+tem);
+		}
+		if(type.equals("my_friends")){
+			String user_id=req.getParameter("user_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.my_friends(user_id);
+			resp.getWriter().write(tem);  
+		}
+		if(type.equals("my_ask_friends")){
+			String user_id=req.getParameter("user_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.my_ask_friends(user_id);
+			resp.getWriter().write(tem);  
+		}
+		if(type.equals("accept_friend")){
+			String user_id1=req.getParameter("user1");
+			String user_id2=req.getParameter("user2");
+			UseDB useDB=new UseDB();
+			String tem=useDB.accept_friend(user_id1,user_id2);
+			resp.getWriter().write(tem);
+			//System.out.println("successful："+tem);
+		}
+		if(type.equals("finish_task")){
+			String task_id=req.getParameter("task_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.finish_task(task_id);
+			resp.getWriter().write(tem);
+		}
+		if(type.equals("people_around")){
+			String user_id=req.getParameter("user_id");
+			UseDB useDB=new UseDB();
+			String tem=useDB.people_around(user_id);
+			resp.getWriter().write(tem);  
+		}
+		if(type.equals("search_tasks")){
+			String user_id=req.getParameter("user_id");
+			String tag=req.getParameter("tag");
+			String distance_sp=req.getParameter("distance");
+			String type_sp=req.getParameter("type_sp");
+			UseDB useDB=new UseDB();
+			
+			String tem=useDB.search_tasks(tag,type_sp,distance_sp,user_id);
+			resp.getWriter().write(tem);  
+			//System.out.println("successful："+tem);
+		}	
 	}
 	
 

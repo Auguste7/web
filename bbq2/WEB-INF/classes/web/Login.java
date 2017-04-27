@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +39,11 @@ public class Login extends HttpServlet{
 		if(type==null) type="";
 		if(type.equals("login")){
 			UseDB useDB=new UseDB();
-			String tem=useDB.login(telephone, password);
+			String Longitude=req.getParameter("Longitude"); 
+			String Latitude=req.getParameter("Latitude"); 
+			
+			String tem=useDB.login(telephone, password,Longitude,Latitude);
+			
 			if(tem.equals("wrong password")){
 				resp.getWriter().write("wrong password");
 			}else if(tem.equals("The user dosen't exist")){
@@ -46,7 +51,6 @@ public class Login extends HttpServlet{
 			}else{
 				resp.getWriter().write(tem); 
 			}
-		
 		}else if(type.equals("register")){
 			UseDB useDB=new UseDB();
 			int tem=useDB.register(telephone, password);
@@ -69,7 +73,7 @@ public class Login extends HttpServlet{
         DiskFileItemFactory factory = new DiskFileItemFactory();    
          
        // String path = req.getSession().getServletContext().getRealPath("/");    
-	String path = "/home/web_upload";	
+	String path = "/home/Download/tomcat/webapps/bbq2/upload/web_upload";	
         //String path = req.getSession().getServletContext().getRealPath();    
         File file=new File(path);  
 
@@ -105,9 +109,14 @@ public class Login extends HttpServlet{
                     int start = value.lastIndexOf("\\");    
                       
                     String filename = value.substring(start+1);    
-                    req.setAttribute("path", filename);    
-                    
-                    item.write( new File(path,filename) );  
+		    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");//设置日期格式
+		    String tmp_str = df.format(new Date());
+                    req.setAttribute("path", tmp_str + "_" + filename);    
+		    
+                    //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                    item.write(new File(path,tmp_str + "_" + filename)); 
+ 
+                   //item.write( new File(path,filename) );  
                     System.out.println("successful："+filename);  
                     
                 }    
@@ -141,16 +150,19 @@ public class Login extends HttpServlet{
 		String reward=(String) URLDecoder.decode(req.getAttribute("reward").toString(),"UTF-8");//req.getAttribute("reward");
 		String user_id=(String) URLDecoder.decode(req.getAttribute("user_id").toString(),"UTF-8");
 		String path=(String) URLDecoder.decode(req.getAttribute("path").toString(),"UTF-8");//req.getAttribute("publicer");
+		String Latitude=(String) URLDecoder.decode(req.getAttribute("Latitude").toString(),"UTF-8");
+		String Longitude=(String) URLDecoder.decode(req.getAttribute("Longitude").toString(),"UTF-8");//req.getAttribute("publicer");
 		UseDB useDB=new UseDB();
-		String tem=useDB.public_task(title,detail, path, tag, deadline_time, public_time, location, towho, type, reward, user_id);
+		String tem=useDB.publish_task(title,detail, path, tag, deadline_time, public_time, location, towho, type, reward, user_id,Latitude,Longitude);
 		
 		if(tem.equals("successful")){
 			resp.getWriter().print(tem);
 		}else{
 			resp.getWriter().print("failed");  
 		}
+		//测试代码
 		//resp.getWriter().print(tem);  
-//*/		
+		
 	}
 
 }
